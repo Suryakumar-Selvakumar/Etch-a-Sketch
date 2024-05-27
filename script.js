@@ -1,6 +1,7 @@
 const container = document.querySelector(".container");
 const btnClearGrid = document.querySelector("#clear-grid");
 const btnChangeColor = document.querySelector("#change-color");
+
 let maxWidth = 500;
 const colorNames = [
   "aliceblue",
@@ -172,29 +173,42 @@ function createGrid(num) {
       e.currentTarget.style.backgroundColor = `rgb(${x},${y},${z})`;
     });
   });
+}
 
-  btnClearGrid.addEventListener("click", () => {
-    divElements.forEach((e) => (e.style.backgroundColor = "white"));
-  });
-
-  btnChangeColor.addEventListener("click", () => {
-    let divColor = selectColor();
-    divElements.forEach((element) => {
-      element.addEventListener("mouseover", (e) => {
-        e.currentTarget.style.backgroundColor = `${divColor}`;
-      });
+function changeColor() {
+  const divElements = container.childNodes;
+  let divColor = selectColor();
+  divElements.forEach((element) => {
+    element.addEventListener("mouseover", (e) => {
+      e.currentTarget.style.backgroundColor = `${divColor}`;
     });
   });
 }
 
-createGrid(16);
+function clearGrid() {
+  const divElements = container.childNodes;
+  divElements.forEach((e) => (e.style.backgroundColor = "rgb(190, 191, 193)"));
+}
+
+btnClearGrid.addEventListener("click", clearGrid);
+btnChangeColor.addEventListener("click", changeColor);
+
+createGrid(20);
 
 const btnNewGrid = document.querySelector("#new-grid");
 btnNewGrid.addEventListener("click", () => {
+  let gridValue;
   do {
-    gridValue = parseInt(prompt("Enter desired grid size:", ""), 10);
-  } while ((gridValue > 100 || gridValue < 1) && !isNaN(gridValue));
-  createGrid(gridValue);
+    gridValue = prompt("Enter desired grid size:", "");
+    if (gridValue === null) {
+      break;
+    } else {
+      gridValue = parseInt(gridValue, 10);
+    }
+  } while (gridValue > 100 || gridValue < 1 || isNaN(gridValue));
+  if (typeof gridValue === "number") {
+    createGrid(gridValue);
+  }
 });
 
 function randomColor() {
@@ -206,7 +220,12 @@ function selectColor() {
   let color;
   do {
     color = prompt("Enter desired Color:", "");
+    if (color === null) {
+      break;
+    }
     console.log(color);
-  } while (!colorNames.includes(color) && color !== null);
-  return color;
+  } while (!colorNames.includes(color));
+  if (color) {
+    return color;
+  }
 }
