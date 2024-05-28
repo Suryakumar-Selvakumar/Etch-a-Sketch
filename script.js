@@ -164,7 +164,7 @@ function createGrid(num) {
     } else {
       div.style.width = maxWidth / num + "px";
       div.style.height = maxWidth / num + "px";
-      div.style.border = isGrid ? "solid 1px black" : "0";
+      div.style.border = "solid 1px black";
     }
     container.appendChild(div);
   }
