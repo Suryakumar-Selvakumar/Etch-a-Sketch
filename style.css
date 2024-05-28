@@ -57,6 +57,15 @@ body {
   background-color: rgb(190, 191, 193);
 }
 
+#eraser {
+  cursor: pointer;
+}
+
+#eraser.active {
+  background-color: rgb(168, 35, 23);
+  color: white;
+}
+
 .footer {
   display: flex;
   justify-content: center;
